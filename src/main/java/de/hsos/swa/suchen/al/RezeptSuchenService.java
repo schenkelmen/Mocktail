@@ -13,11 +13,15 @@ public class RezeptSuchenService {
     @RestClient
     SuchenRestClient rezeptRestClient;
 
-    public List<Rezept> sucheOnline(String name) {
+    public List<Rezept> sucheRezept(String name) {
         return rezeptRestClient.search(name);
     }
 
-    public List<Rezept> alleOnline() {
+    public List<Rezept> alleRezepte() {
         return rezeptRestClient.findAll();
+    }
+
+    public Rezept RezeptDetails(long id) {
+        return rezeptRestClient.findById(id);
     }
 }
