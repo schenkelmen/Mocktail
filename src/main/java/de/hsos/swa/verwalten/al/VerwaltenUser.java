@@ -24,8 +24,8 @@ public class VerwaltenUser implements RezeptLoeschen, RezeptAendern, RezeptErste
     }
 
     @Override
-    public void rezeptAendern(long id, Rezept rezept) {
-        verwaltenService.rezeptAktualisieren(id, rezept);
+    public void rezeptAendern(long id, String name, String zutaten, String zubereitung) {
+        verwaltenService.rezeptAktualisieren(id, name, zutaten, zubereitung);
     }
 
 

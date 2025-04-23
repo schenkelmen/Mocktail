@@ -115,17 +115,18 @@ public class RezeptRepository {
         }
     }
 
-    public Optional<Rezept> update(Long id, Rezept updated) {
+    public Optional<Rezept> update(Long id, String name, String zutaten, String zubereitung) {
         String sql = "UPDATE mocktail SET name = ?, zutaten = ?, zubereitung = ?, preis = ? WHERE id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, updated.getName());
-            stmt.setString(2, updated.getZutaten());
-            stmt.setString(3, updated.getZubereitung());
-            stmt.setDouble(4, updated.getPreis());
+            stmt.setString(1, name);
+            stmt.setString(2, zutaten);
+            stmt.setString(3, zubereitung);
+            stmt.setDouble(4, 0.0); // Optional: Standardwert für Preis
             stmt.setLong(5, id);
+
             int affected = stmt.executeUpdate();
             if (affected > 0) {
-                updated.setId(id);
+                Rezept updated = new Rezept(id, name, zutaten, zubereitung, 0.0);
                 return Optional.of(updated);
             }
         } catch (SQLException e) {
@@ -133,6 +134,7 @@ public class RezeptRepository {
         }
         return Optional.empty();
     }
+
 
     private long getNextId() throws SQLException {
         // Simple Auto-Increment Replacement

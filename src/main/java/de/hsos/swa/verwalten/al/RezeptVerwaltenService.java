@@ -25,7 +25,7 @@ public class RezeptVerwaltenService {
         }
     }
 
-    public void rezeptAktualisieren(Long id, Rezept rezept) {
-        rezeptRestClient.update(id, rezept);
+    public void rezeptAktualisieren(Long id, String name, String zutaten, String zubereitung) {
+        rezeptRestClient.update(id, name, zutaten, zubereitung);
     }
 }

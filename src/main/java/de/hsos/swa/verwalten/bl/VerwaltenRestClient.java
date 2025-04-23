@@ -22,6 +22,6 @@ public interface VerwaltenRestClient {
 
     @PUT
     @Path("/{id}")
-    void update(@PathParam("id") Long id, Rezept rezept);
+    void update(@PathParam("id") Long id, String name, String zutaten, String zubereitung);
 
 }
