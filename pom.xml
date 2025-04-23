@@ -69,7 +69,6 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest-client-jsonb</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>
