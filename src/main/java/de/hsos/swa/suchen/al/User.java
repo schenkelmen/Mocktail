@@ -20,12 +20,8 @@ public class User implements SucheRezept, ZeigeDetailsAn {
         return rezeptSuchenService.sucheRezept(namen);
     }
 
-    public List<Rezept> zeigeDetailsAn() {
-        return rezeptSuchenService.alleRezepte();
-    }
-
     @Override
     public Rezept zeigeDetailsAn(long rezeptnummer) {
-        return rezeptSuchenService.rezeptRestClient.findById(rezeptnummer);
+        return rezeptSuchenService.rezeptDetails(rezeptnummer);
     }
 }

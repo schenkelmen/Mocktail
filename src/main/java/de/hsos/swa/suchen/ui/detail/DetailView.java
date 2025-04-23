@@ -1,5 +1,6 @@
 package de.hsos.swa.suchen.ui.detail;
 
+import de.hsos.swa.shared.Rezept;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.Scanner;
@@ -29,8 +30,7 @@ public class DetailView {
         return eingabe;
     }
 
-    public void zeigeDetails(long eingabe) {
-        // ToDo: Anzeigen des Rezeptes eines Mocktails
-        System.out.println(eingabe);
+    public void zeigeDetails(Rezept rezept) {
+        System.out.println(rezept.toString());
     }
 }

@@ -23,7 +23,7 @@ public class RezeptSuchenService {
         return rezeptRestClient.findAll();
     }
 
-    public Rezept RezeptDetails(long id) {
+    public Rezept rezeptDetails(long id) {
         return rezeptRestClient.findById(id);
     }
 }
