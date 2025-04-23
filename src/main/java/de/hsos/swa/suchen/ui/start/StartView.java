@@ -1,7 +1,10 @@
 package de.hsos.swa.suchen.ui.start;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
 import java.util.Scanner;
 
+@ApplicationScoped
 public class StartView {
     private final Scanner scanner = new Scanner(System.in);
 

@@ -2,11 +2,17 @@ package de.hsos.swa.suchen.ui.start;
 
 import de.hsos.swa.suchen.ui.detail.DetailControl;
 import de.hsos.swa.suchen.ui.such.SuchControl;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
+@ApplicationScoped
 public class StartControl {
-    private final StartView startView = new StartView();
-    private final SuchControl suchControl = new SuchControl();
-    private final DetailControl detailControl = new DetailControl();
+    @Inject
+    StartView startView;
+    @Inject
+    SuchControl suchControl;
+    @Inject
+    DetailControl detailControl;
 
     public void starteAnsichtDerSuche() {
         int auswahl = startView.frageObSucheGestartetWerdenSoll();
