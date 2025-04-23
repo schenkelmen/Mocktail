@@ -1,24 +1,23 @@
 package de.hsos.swa.shared;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Rezept {
     private long id;
     private String name;
-    private List<Zutat> zutaten = new ArrayList<>();
+    private String zutaten;
+    private String zubereitung;
+    private double preis;
 
-    public Rezept(long id, String name) {
-        this.id = id;
-        Objects.requireNonNull(name);
-        this.name = name;
+    public Rezept() {
     }
 
-    public Rezept(long id, String name, List<Zutat> zutaten) {
+    public Rezept(long id, String name, String zutaten, String zubereitung, double preis) {
         this.id = id;
         this.name = Objects.requireNonNull(name);
         this.zutaten = Objects.requireNonNull(zutaten);
+        this.zubereitung = Objects.requireNonNull(zubereitung);
+        this.preis = preis;
     }
 
     public long getId() {
@@ -29,6 +28,18 @@ public class Rezept {
         return name;
     }
 
+    public String getZutaten() {
+        return zutaten;
+    }
+
+    public String getZubereitung() {
+        return zubereitung;
+    }
+
+    public double getPreis() {
+        return preis;
+    }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -37,31 +48,34 @@ public class Rezept {
         this.name = name;
     }
 
-    public List<Zutat> getZutaten() {
-        return zutaten;
+    public void setZutaten(String zutaten) {
+        this.zutaten = zutaten;
     }
 
-    public void setZutaten(List<Zutat> zutaten) {
-        this.zutaten = zutaten != null ? zutaten : new ArrayList<>();
+    public void setZubereitung(String zubereitung) {
+        this.zubereitung = zubereitung;
+    }
+
+    public void setPreis(double preis) {
+        this.preis = preis;
+    }
+
+    @Override
+    public String toString() {
+        return "Rezept{id=" + id + ", name='" + name + '\'' +
+                ", zutaten='" + zutaten + '\'' +
+                ", zubereitung='" + zubereitung + '\'' +
+                ", preis=" + preis + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Rezept other)) return false;
+        return this.id == other.id;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof Rezept)) {
-            return false;
-        }
-        Rezept other = (Rezept) obj;
-        return Objects.equals(this.id, other.id);
-    }
-
-    @Override
-    public String toString() {
-        return "Rezept [id=" + this.id + ", name=" + this.name
-                + ", Zutaten: " + this.zutaten.toString() + "]";
     }
 }
