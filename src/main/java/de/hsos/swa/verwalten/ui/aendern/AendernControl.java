@@ -11,10 +11,11 @@ public class AendernControl {
 
     private void mocktailAendern(long id) {
         String newName = aendernView.nameAendern();
-        String newRezept = aendernView.rezeptAendern();
+        String newZutaten = aendernView.zutatenAendern();
+        String newZubereitung = aendernView.zubereitungAendern();
 
         // ToDo: ÄnderungsLogik mit UPDATE
 
-        aendernView.bestaetigung(newName,  newRezept);
+        aendernView.bestaetigung(newName,  newZubereitung, newZubereitung);
     }
 }

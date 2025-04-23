@@ -33,14 +33,20 @@ public class AendernView {
         return scanner.nextLine();
     }
 
-    public String rezeptAendern() {
-        System.out.print("Geben sie ein neues Rezept ein: ");
+    public String zutatenAendern() {
+        System.out.print("Geben sie die neuen Zutaten ein: ");
         return scanner.nextLine();
     }
 
-    public void bestaetigung(String name, String rezept) {
-        System.out.println("Mocktail: " + name);
-        System.out.println("Rezept:   " + rezept);
+    public String zubereitungAendern() {
+        System.out.print("Geben sie die neue Zubereitung ein: ");
+        return scanner.nextLine();
+    }
+
+    public void bestaetigung(String name, String zutaten, String zubereitung) {
+        System.out.println("Mocktail:    " + name);
+        System.out.println("Zutaten:     " + zutaten);
+        System.out.println("Zubereitung: " + zubereitung);
         System.out.println("GEÄNDERT!");
     }
 

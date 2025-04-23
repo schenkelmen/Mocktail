@@ -11,15 +11,23 @@ public class ErstellenView {
         return scanner.nextLine();
     }
 
-    public String frageNachRezept() {
-        System.out.println("Geben Sie das Rezept des Mocktails an.");
+    public String frageNachZutaten() {
+        System.out.println("Geben Sie die Zutaten des Mocktails an.");
         System.out.print("Bitte Eingeben: ");
         return scanner.nextLine();
     }
 
-    public void bestaetigung(String name, String rezept) {
-        System.out.println("Mocktail: " + name);
-        System.out.println("Rezept:   " + rezept);
+    public String frageNachZubereitung() {
+        System.out.println("Geben Sie die Zubereitung des Mocktails an.");
+        System.out.print("Bitte Eingeben: ");
+        return scanner.nextLine();
+    }
+
+    public void bestaetigung(String name, String zutaten, String zubereitung) {
+        System.out.println("Mocktail:    " + name);
+        System.out.println("Zutaten:     " + zutaten);
+        System.out.println("Zubereitung: " + zubereitung);
         System.out.println("HINZUGEFÜGT!");
     }
+
 }

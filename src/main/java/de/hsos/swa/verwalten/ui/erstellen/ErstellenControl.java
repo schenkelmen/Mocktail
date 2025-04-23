@@ -5,13 +5,14 @@ public class ErstellenControl {
 
     public void starteErstellungAnsicht() {
         String name = erstellenView.frageNachName();
-        String rezept = erstellenView.frageNachRezept();
+        String zutaten = erstellenView.frageNachZutaten();
+        String zubereitung = erstellenView.frageNachZubereitung();
 
-        erstelleMocktail(name, rezept);
+        erstelleMocktail(name, zutaten, zubereitung);
     }
 
-    private void erstelleMocktail(String name, String rezept) {
+    private void erstelleMocktail(String name, String rezept, String zubereitung) {
         // ToDo: Erstellen des Mockteils und CREATE-Aufruf
-        erstellenView.bestaetigung(name, rezept);
+        erstellenView.bestaetigung(name, rezept, zubereitung);
     }
 }
