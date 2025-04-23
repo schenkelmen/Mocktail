@@ -2,11 +2,13 @@ package de.hsos.swa.suchen.al;
 
 import de.hsos.swa.shared.Rezept;
 import de.hsos.swa.suchen.bl.SuchenRestClient;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import java.util.List;
 
+@ApplicationScoped
 public class RezeptSuchenService {
 
     @Inject
