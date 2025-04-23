@@ -40,15 +40,15 @@ public class RezeptResource {
     }
 
     @POST
-    public Response create(String name, String zutaten, String zubereitung) {
-        Long created = rezeptRepository.create(name, zutaten, zubereitung);
+    public Response create(Rezept rezept) {
+        Long created = rezeptRepository.create(rezept);
         return Response.status(Response.Status.CREATED).entity(created).build();
     }
 
     @PUT
     @Path("/{id}")
-    public Response update(@PathParam("id") Long id, String name, String zutaten, String zubereitung) {
-        return rezeptRepository.update(id, name, zutaten, zubereitung)
+    public Response update(@PathParam("id") Long id, Rezept rezept) {
+        return rezeptRepository.update(id, rezept)
                 .map(Response::ok)
                 .orElse(Response.status(Response.Status.NOT_FOUND))
                 .build();
