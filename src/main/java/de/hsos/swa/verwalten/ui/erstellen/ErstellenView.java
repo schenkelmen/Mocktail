@@ -1,7 +1,10 @@
 package de.hsos.swa.verwalten.ui.erstellen;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
 import java.util.Scanner;
 
+@ApplicationScoped
 public class ErstellenView {
     private Scanner scanner = new Scanner(System.in);
 

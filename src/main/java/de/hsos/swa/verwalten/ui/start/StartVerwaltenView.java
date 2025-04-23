@@ -1,7 +1,10 @@
 package de.hsos.swa.verwalten.ui.start;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
 import java.util.Scanner;
 
+@ApplicationScoped
 public class StartVerwaltenView {
     private Scanner scanner = new Scanner(System.in);
 

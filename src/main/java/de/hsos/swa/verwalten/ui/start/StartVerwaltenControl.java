@@ -3,13 +3,19 @@ package de.hsos.swa.verwalten.ui.start;
 import de.hsos.swa.verwalten.ui.aendern.AendernControl;
 import de.hsos.swa.verwalten.ui.erstellen.ErstellenControl;
 import de.hsos.swa.verwalten.ui.verwalten.VerwaltenControl;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
-
+@ApplicationScoped
 public class StartVerwaltenControl {
-    private StartVerwaltenView startVerwaltenView = new StartVerwaltenView();
-    private VerwaltenControl verwaltenControl = new VerwaltenControl();
-    private AendernControl aendernControl = new AendernControl();
-    private ErstellenControl erstellenControl = new ErstellenControl();
+    @Inject
+    StartVerwaltenView startVerwaltenView;
+    @Inject
+    VerwaltenControl verwaltenControl;
+    @Inject
+    AendernControl aendernControl;
+    @Inject
+    ErstellenControl erstellenControl;
 
     public void starteVerwaltung() {
         int auswahl = startVerwaltenView.frageNachAktion();

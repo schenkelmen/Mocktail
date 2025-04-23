@@ -1,7 +1,13 @@
 package de.hsos.swa.verwalten.ui.erstellen;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
+@ApplicationScoped
 public class ErstellenControl {
-    private ErstellenView erstellenView = new ErstellenView();
+
+    @Inject
+    ErstellenView erstellenView;
 
     public void starteErstellungAnsicht() {
         String name = erstellenView.frageNachName();

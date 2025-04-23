@@ -1,7 +1,10 @@
 package de.hsos.swa.verwalten.ui.aendern;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
 import java.util.Scanner;
 
+@ApplicationScoped
 public class AendernView {
     private Scanner scanner = new Scanner(System.in);
 

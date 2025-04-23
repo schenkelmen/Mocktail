@@ -1,7 +1,13 @@
 package de.hsos.swa.verwalten.ui.aendern;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
+@ApplicationScoped
 public class AendernControl {
-    private AendernView aendernView = new AendernView();
+
+    @Inject
+    AendernView aendernView;
 
     public void starteAendernAnsicht() {
         long id = aendernView.frageNachId();

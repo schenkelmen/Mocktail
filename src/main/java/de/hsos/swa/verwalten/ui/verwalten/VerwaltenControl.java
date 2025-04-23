@@ -1,7 +1,13 @@
 package de.hsos.swa.verwalten.ui.verwalten;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
+@ApplicationScoped
 public class VerwaltenControl {
-    private VerwaltenView verwaltenView = new VerwaltenView();
+
+    @Inject
+    VerwaltenView verwaltenView;
 
     public void starteVerwaltungsAnsicht() {
         long id = verwaltenView.frageNachId();
