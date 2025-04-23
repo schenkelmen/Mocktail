@@ -2,9 +2,11 @@ package de.hsos.swa.menu.ui;
 
 import de.hsos.swa.suchen.ui.start.StartControl;
 import de.hsos.swa.verwalten.ui.start.StartVerwaltenControl;
+import io.quarkus.runtime.Startup;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+@Startup
 @ApplicationScoped
 public class MenuController {
 
