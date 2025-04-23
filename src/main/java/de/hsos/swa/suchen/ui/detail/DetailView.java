@@ -33,4 +33,8 @@ public class DetailView {
     public void zeigeDetails(Rezept rezept) {
         System.out.println(rezept.toString());
     }
+
+    public void errorMessage() {
+        System.out.println("Diesen Mocktail gibt es nicht!");
+    }
 }

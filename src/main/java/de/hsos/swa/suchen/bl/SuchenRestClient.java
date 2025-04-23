@@ -18,7 +18,9 @@ public interface SuchenRestClient {
     List<Rezept> search(@QueryParam("name") String name);
 
     @GET
-    Rezept findById(@QueryParam("id") long id);
+    @Path("/{id}")
+    Rezept findById(@PathParam("id") long id);
+
 
     @GET
     List<Rezept> findAll();
