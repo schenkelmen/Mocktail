@@ -14,8 +14,8 @@ public class VerwaltenUser implements RezeptLoeschen, RezeptAendern, RezeptErste
     RezeptVerwaltenService verwaltenService;
 
     @Override
-    public void rezeptErstellen(Rezept rezept) {
-        verwaltenService.rezeptAnlegen(rezept);
+    public void rezeptErstellen(String name, String zutaten, String zubereitung) {
+        verwaltenService.rezeptAnlegen(name, zutaten, zubereitung);
     }
 
     @Override

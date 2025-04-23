@@ -85,15 +85,16 @@ public class RezeptRepository {
     }
 
 
-    public Long create(Rezept rezept) {
+    public Long create(String name, String zutaten, String zubereitung) {
         String sql = "INSERT INTO mocktail (id, name, zutaten, zubereitung, preis) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            long id = rezept.getId() > 0 ? rezept.getId() : getNextId();
+            long id = getNextId();
             stmt.setLong(1, id);
-            stmt.setString(2, rezept.getName());
-            stmt.setString(3, rezept.getZutaten());
-            stmt.setString(4, rezept.getZubereitung());
-            stmt.setDouble(5, rezept.getPreis());
+            stmt.setString(2, name);
+            stmt.setString(3, zutaten);
+            stmt.setString(4, zubereitung);
+            stmt.setDouble(5, 0.0); // default-Preis, da nicht übergeben
+
             stmt.executeUpdate();
             return id;
         } catch (SQLException e) {
@@ -101,6 +102,7 @@ public class RezeptRepository {
             return null;
         }
     }
+
 
     public boolean delete(Long id) {
         String sql = "DELETE FROM mocktail WHERE id = ?";

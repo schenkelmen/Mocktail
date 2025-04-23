@@ -13,8 +13,8 @@ public class RezeptVerwaltenService {
     @RestClient
     VerwaltenRestClient rezeptRestClient;
 
-    public void rezeptAnlegen(Rezept rezept) {
-        rezeptRestClient.create(rezept);
+    public void rezeptAnlegen(String name, String zutaten, String zubereitung) {
+        rezeptRestClient.create(name, zutaten, zubereitung);
     }
 
     public void rezeptLoeschen(Long id) {

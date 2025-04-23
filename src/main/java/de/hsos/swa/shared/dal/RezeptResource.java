@@ -40,8 +40,8 @@ public class RezeptResource {
     }
 
     @POST
-    public Response create(Rezept rezept) {
-        Long created = rezeptRepository.create(rezept);
+    public Response create(String name, String zutaten, String zubereitung) {
+        Long created = rezeptRepository.create(name, zutaten, zubereitung);
         return Response.status(Response.Status.CREATED).entity(created).build();
     }
 

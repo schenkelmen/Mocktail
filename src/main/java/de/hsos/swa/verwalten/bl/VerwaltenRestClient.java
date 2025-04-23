@@ -14,7 +14,7 @@ import java.util.List;
 public interface VerwaltenRestClient {
 
     @POST
-    void create(Rezept rezept);
+    void create(String name, String zutaten, String zubereitung);
 
     @DELETE
     @Path("/{id}")
