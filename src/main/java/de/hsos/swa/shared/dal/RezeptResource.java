@@ -47,8 +47,8 @@ public class RezeptResource {
 
     @PUT
     @Path("/{id}")
-    public Response update(@PathParam("id") Long id, Rezept rezept) {
-        return rezeptRepository.update(id, rezept)
+    public Response update(@PathParam("id") Long id, String name, String zutaten, String zubereitung) {
+        return rezeptRepository.update(id, name, zutaten, zubereitung)
                 .map(Response::ok)
                 .orElse(Response.status(Response.Status.NOT_FOUND))
                 .build();
