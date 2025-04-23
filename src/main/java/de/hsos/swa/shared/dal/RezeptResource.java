@@ -30,6 +30,15 @@ public class RezeptResource {
                 .build();
     }
 
+    @GET
+    @Path("/search")
+    public List<Rezept> searchByName(@QueryParam("name") String name) {
+        if (name == null || name.isBlank()) {
+            throw new BadRequestException("Parameter 'name' darf nicht leer sein.");
+        }
+        return rezeptRepository.findByName(name);
+    }
+
     @POST
     public Response create(Rezept rezept) {
         Long created = rezeptRepository.create(rezept);

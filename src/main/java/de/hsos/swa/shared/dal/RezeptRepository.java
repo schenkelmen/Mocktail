@@ -63,6 +63,28 @@ public class RezeptRepository {
         return Optional.empty();
     }
 
+    public List<Rezept> findByName(String name) {
+        List<Rezept> matching = new ArrayList<>();
+        String sql = "SELECT * FROM mocktail WHERE LOWER(name) LIKE ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, "%" + name.toLowerCase() + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                matching.add(new Rezept(
+                        rs.getLong("id"),
+                        rs.getString("name"),
+                        rs.getString("zutaten"),
+                        rs.getString("zubereitung"),
+                        rs.getDouble("preis")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return matching;
+    }
+
+
     public Long create(Rezept rezept) {
         String sql = "INSERT INTO mocktail (id, name, zutaten, zubereitung, preis) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
