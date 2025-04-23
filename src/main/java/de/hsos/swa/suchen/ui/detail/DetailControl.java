@@ -1,7 +1,12 @@
 package de.hsos.swa.suchen.ui.detail;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
+@ApplicationScoped
 public class DetailControl {
-    public final DetailView detailView = new DetailView();
+    @Inject
+    DetailView detailView;
 
     public void starteDetailAnsicht() {
         long eingabe = detailView.frageNachMocktailId();

@@ -1,7 +1,10 @@
 package de.hsos.swa.suchen.ui.detail;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
 import java.util.Scanner;
 
+@ApplicationScoped
 public class DetailView {
     private Scanner scanner = new Scanner(System.in);
 

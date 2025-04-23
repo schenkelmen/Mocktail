@@ -1,7 +1,10 @@
 package de.hsos.swa.menu.ui;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
 import java.util.Scanner;
 
+@ApplicationScoped
 public class MenuView {
     private Scanner scanner = new Scanner(System.in);
 

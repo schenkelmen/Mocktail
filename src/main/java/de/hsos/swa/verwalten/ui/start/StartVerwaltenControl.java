@@ -4,6 +4,7 @@ import de.hsos.swa.verwalten.ui.aendern.AendernControl;
 import de.hsos.swa.verwalten.ui.erstellen.ErstellenControl;
 import de.hsos.swa.verwalten.ui.verwalten.VerwaltenControl;
 
+
 public class StartVerwaltenControl {
     private StartVerwaltenView startVerwaltenView = new StartVerwaltenView();
     private VerwaltenControl verwaltenControl = new VerwaltenControl();
