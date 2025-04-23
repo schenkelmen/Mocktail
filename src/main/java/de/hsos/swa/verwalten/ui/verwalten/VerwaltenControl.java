@@ -1,5 +1,6 @@
 package de.hsos.swa.verwalten.ui.verwalten;
 
+import de.hsos.swa.verwalten.al.RezeptLoeschen;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -9,6 +10,9 @@ public class VerwaltenControl {
     @Inject
     VerwaltenView verwaltenView;
 
+    @Inject
+    RezeptLoeschen user;
+
     public void starteVerwaltungsAnsicht() {
         long id = verwaltenView.frageNachId();
 
@@ -16,7 +20,7 @@ public class VerwaltenControl {
     }
 
     private void mocktailLoeschen(long id) {
-        // ToDo: Löschen des Mocktails nach ID mit DELETE
+        user.rezeptLoeschen(id);
         verwaltenView.bestaetigung(id);
     }
 }

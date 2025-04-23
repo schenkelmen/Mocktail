@@ -18,7 +18,11 @@ public class RezeptVerwaltenService {
     }
 
     public void rezeptLoeschen(Long id) {
-        rezeptRestClient.delete(id);
+        try {
+            rezeptRestClient.delete(id);
+        } catch (Exception e) {
+            System.out.println("Keine Mocktail mit der ID " + id + " gefunden.");
+        }
     }
 
     public void rezeptAktualisieren(Long id, Rezept rezept) {

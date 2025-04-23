@@ -21,7 +21,6 @@ public class DetailControl {
 
     private void zeigeDetails(long eingabe) {
         Rezept rezept = user.zeigeDetailsAn(eingabe);
-        System.out.println(eingabe);
         if (rezept != null) {
             detailView.zeigeDetails(rezept);
         }else{

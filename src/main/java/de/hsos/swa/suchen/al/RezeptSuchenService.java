@@ -24,6 +24,11 @@ public class RezeptSuchenService {
     }
 
     public Rezept rezeptDetails(long id) {
-        return rezeptRestClient.findById(id);
+        try {
+            return rezeptRestClient.findById(id);
+        } catch (Exception e) {
+            System.out.println("Rezept details not found");
+            return null;
+        }
     }
 }
