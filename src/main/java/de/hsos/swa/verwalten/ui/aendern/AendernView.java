@@ -1,4 +1,47 @@
 package de.hsos.swa.verwalten.ui.aendern;
 
+import java.util.Scanner;
+
 public class AendernView {
+    private Scanner scanner = new Scanner(System.in);
+
+    public long frageNachId() {
+        long eingabe = -1;
+        boolean gueltig = false;
+
+        while (!gueltig) {
+            System.out.println("Geben Sie die ID des zu ändernden Mocktails ein.");
+            System.out.print("Bitte ID wählen: ");
+
+            if (scanner.hasNextLong()) {
+                eingabe = scanner.nextLong();
+                scanner.nextLine();
+                gueltig = true;
+            } else {
+                System.out.println("Ungültige Eingabe. Bitte eine Zahl eingeben.");
+                scanner.next();
+            }
+        }
+
+        return eingabe;
+
+    }
+
+    public String nameAendern() {
+        System.out.println("Wenn keine Änderung gewünscht, Feld frei lassen.");
+        System.out.print("Geben sie einen neuen Namen ein: ");
+        return scanner.nextLine();
+    }
+
+    public String rezeptAendern() {
+        System.out.print("Geben sie ein neues Rezept ein: ");
+        return scanner.nextLine();
+    }
+
+    public void bestaetigung(String name, String rezept) {
+        System.out.println("Mocktail: " + name);
+        System.out.println("Rezept:   " + rezept);
+        System.out.println("GEÄNDERT!");
+    }
+
 }

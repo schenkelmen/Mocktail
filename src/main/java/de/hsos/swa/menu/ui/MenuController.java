@@ -1,12 +1,12 @@
 package de.hsos.swa.menu.ui;
 
 import de.hsos.swa.suchen.ui.start.StartControl;
-import de.hsos.swa.verwalten.ui.verwalten.VerwaltenControl;
+import de.hsos.swa.verwalten.ui.start.StartVerwaltenControl;
 
 public class MenuController {
     private MenuView menuView = new MenuView();
     private StartControl startControl = new StartControl();
-    private VerwaltenControl verwaltenControl = new VerwaltenControl();
+    private StartVerwaltenControl startVerwaltenControl = new StartVerwaltenControl();
 
     public void start() {
         boolean running = true;
@@ -19,7 +19,7 @@ public class MenuController {
                     startControl.starteAnsichtDerSuche();
                     break;
                 case 2:
-                    verwaltenControl.starteVerwaltung();
+                    startVerwaltenControl.starteVerwaltung();
                     break;
                 case 0:
                     running = false;
