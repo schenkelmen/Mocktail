@@ -16,7 +16,7 @@ public class MenuController {
 
             switch (auswahl) {
                 case 1:
-                    startControl.starteSuche();
+                    startControl.starteAnsichtDerSuche();
                     break;
                 case 2:
                     verwaltenControl.starteVerwaltung();
