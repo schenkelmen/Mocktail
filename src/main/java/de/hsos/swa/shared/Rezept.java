@@ -64,5 +64,4 @@ public class Rezept {
         return "Rezept [id=" + this.id + ", name=" + this.name
                 + ", Zutaten: " + this.zutaten.toString() + "]";
     }
-
 }
