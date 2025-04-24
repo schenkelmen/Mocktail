@@ -33,4 +33,14 @@ public class RezeptVerwaltenService {
         Rezept rezept = new Rezept(id, name, zutaten, zubereitung, 0);
         rezeptRestClient.update(id, rezept);
     }
+
+    public Rezept rezeptAnzeigen(Long id) {
+        try {
+            return rezeptRestClient.findById(id);
+        } catch (Exception e) {
+            System.out.println("Fehler beim Laden des Rezepts mit ID " + id + ": " + e.getMessage());
+            return null;
+        }
+    }
+
 }

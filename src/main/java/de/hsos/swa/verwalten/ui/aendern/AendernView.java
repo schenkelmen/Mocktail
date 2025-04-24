@@ -53,4 +53,7 @@ public class AendernView {
         System.out.println("GEÄNDERT!");
     }
 
+    public void zeigeFehler(String s) {
+        System.out.println("Fehler: " + s);
+    }
 }

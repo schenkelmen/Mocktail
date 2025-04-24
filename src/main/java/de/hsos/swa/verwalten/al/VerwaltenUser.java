@@ -28,6 +28,11 @@ public class VerwaltenUser implements RezeptLoeschen, RezeptAendern, RezeptErste
         verwaltenService.rezeptAktualisieren(id, name, zutaten, zubereitung);
     }
 
+    @Override
+    public Rezept rezeptAnzeigen(long id) {
+        return verwaltenService.rezeptAnzeigen(id);
+    }
+
 
     // Optional: Konstruktor oder Getter/Setter, falls du name/vorname brauchst
 }

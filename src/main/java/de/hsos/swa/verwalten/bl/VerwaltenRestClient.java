@@ -24,4 +24,8 @@ public interface VerwaltenRestClient {
     @Path("/{id}")
     void update(@PathParam("id") Long id, Rezept rezept);
 
+    @GET
+    @Path("/{id}")
+    Rezept findById(@PathParam("id") Long id);
+
 }
