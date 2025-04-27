@@ -15,6 +15,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.jboss.logging.Logger;
 
 import java.util.Collection;
 import java.util.List;
@@ -23,71 +24,59 @@ import java.util.List;
 @ApplicationScoped
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-//@Blocking
-//@NonBlocking
 @RunOnVirtualThread
 public class MocktailsResource {
+
+    private static final Logger LOG = Logger.getLogger(MocktailsResource.class);
+
     @Inject
     MocktailVerwalter mocktailVerwalter;
 
     @ConfigProperty(name="defaultCreditLimit", defaultValue = "0.0")
     double defaultCreditLimit;
 
-    //Lifecycle methods using special CDI-Lifecyclevent
-    //https://quarkus.io/guides/cdi-reference#lifecycle-events
     void postConstruct(@Observes Startup event) {
+        LOG.info("Startup-Event empfangen: Anlegen von Beispiel-Mocktails...");
         this.mocktailVerwalter.anlegenNeuMocktail("Flying Hirsch", "Jägermeister, RedBull", "Jägi glas ins RedBull Glas tun und dann trinken");
-        this.mocktailVerwalter.anlegenNeuMocktail( "Virgin Mojito", "Minze, Limette, Soda, Zuckersirup", "Minze und Limette in ein Glas geben, mit Soda auffüllen und Zuckersirup hinzufügen");
+        this.mocktailVerwalter.anlegenNeuMocktail("Virgin Mojito", "Minze, Limette, Soda, Zuckersirup", "Minze und Limette in ein Glas geben, mit Soda auffüllen und Zuckersirup hinzufügen");
     }
 
     void preDestroy(@Observes Shutdown event) {
-        System.out.println("CustomerResource.preDestroy");
+        LOG.info("Shutdown-Event empfangen: Anwendung wird beendet.");
     }
-/*
-    @GET
-    public Multi<KundeDTO> getAllCustomers() {
-        return Multi
-                .createFrom()
-                .items(this.kundenverwalter.getAllCustomers()
-                        .stream()
-                        .map(CustomerDTO::fromCustomer));
-    }
-*/ 
 
     @GET
     public Collection<MocktailDTO> abfragenAllerMocktails() {
+        LOG.info("GET Anfrage: Alle Mocktails werden abgefragt.");
         List<MocktailDTO> list = this.mocktailVerwalter.alleMocktails()
-                                        .stream()
-                                        .map(MocktailDTO::toDTO)
-                                        .toList();
+                .stream()
+                .map(MocktailDTO::toDTO)
+                .toList();
         return list;
-        //besser: return Response.ok().entity(list).build();
-        //noch besser:
-            // if(list.isEmpty()) {
-            //     return Response.status(Status.NOT_FOUND).build();
-            // } else {
-            //     return Response.ok().entity(list).build();
-            // }
     }
 
-    @PATCH //not implemented yet => the CORS-Rules defining my standard interface (and I have to implement it)
+    @PATCH
     public Response patchResponse() {
+        LOG.warn("PATCH Anfrage auf /mocktails - Methode nicht erlaubt.");
         return Response.status(Status.METHOD_NOT_ALLOWED).build();
     }
 
-
     @POST
     public Response anweisenNeuMocktailAnlegen(NeuMocktailDTO neukundeDTO) {
+        LOG.info("POST Anfrage: Neuer Mocktail wird angelegt. Name: " + neukundeDTO.name());
         try {
             String addedCustomer = this.mocktailVerwalter.anlegenNeuMocktail(neukundeDTO.name(), neukundeDTO.zutaten(), neukundeDTO.zubereitung());
+            LOG.info("Mocktail erfolgreich angelegt mit ID: " + addedCustomer);
             return Response.status(Status.CREATED).entity(new MocktailnummerDTO(addedCustomer)).build();
         } catch (Exception e) {
+            LOG.error("Fehler beim Anlegen eines neuen Mocktails.", e);
             return Response.status(Status.BAD_REQUEST).build();
         }
     }
 
-    @DELETE //not implemented yet
+    @DELETE
     public Response deleteResponse() {
+        LOG.warn("DELETE Anfrage auf /mocktails - Methode nicht erlaubt.");
         return Response.status(Status.METHOD_NOT_ALLOWED).build();
     }
 }
