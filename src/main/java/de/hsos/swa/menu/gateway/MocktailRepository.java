@@ -36,6 +36,11 @@ public class MocktailRepository implements MocktailVerwalter {
         return id;
     }
 
+    public String fallbackAnlegenNeuMocktail(String name, String zutaten, String zubereitung) {
+        LOG.error("Fallback: Mocktail konnte nicht angelegt werden.");
+        return "fallback-id"; // Notlösung
+    }
+
     @Override
     public boolean entfernen(String id) {
         try {
