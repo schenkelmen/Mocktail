@@ -15,6 +15,10 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Retry;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.info.Info;
@@ -60,6 +64,9 @@ public class MocktailsResource {
     }
 
     @GET
+    @Retry(maxRetries = 3, delay = 500)
+    @Timeout(2000)
+    @Fallback(fallbackMethod = "fallbackAbfragenAllerMocktails")
     @Operation(summary = "Alle Mocktails abrufen",
             description = "Gibt eine Liste aller verfügbaren Mocktails zurück.")
     @APIResponse(responseCode = "200", description = "Mocktails erfolgreich abgerufen",
@@ -83,6 +90,13 @@ public class MocktailsResource {
     }
 
     @POST
+    @CircuitBreaker(
+            requestVolumeThreshold = 5,
+            failureRatio = 0.5,
+            delay = 3000
+    )
+    @Timeout(3000)
+    @Fallback(fallbackMethod = "fallbackNeuMocktailAnlegen")
     @Operation(summary = "Neuen Mocktail anlegen",
             description = "Legt einen neuen Mocktail anhand der angegebenen Daten an.")
     @APIResponses(value = {

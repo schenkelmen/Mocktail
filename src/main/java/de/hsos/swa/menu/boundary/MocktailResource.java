@@ -11,6 +11,10 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Retry;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.info.Info;
@@ -40,6 +44,9 @@ public class MocktailResource {
     MocktailVerwalter mocktailVerwalter;
 
     @GET
+    @Retry(maxRetries = 3, delay = 500)
+    @Timeout(1000)
+    @Fallback(fallbackMethod = "fallbackMocktailAbrufen")
     @Operation(summary = "Einen Mocktail abrufen", description = "Gibt einen Mocktail zurück.")
     @APIResponses(value = {
             @APIResponse(responseCode = "200", description = "Mocktail erfolgreich abgerufen"),
@@ -56,6 +63,13 @@ public class MocktailResource {
         return Response.ok().entity(MocktailDTO.toDTO(optionalMocktail.get())).build();
     }
 
+    // Ersatzmethode bei Fehler
+    public Response fallbackMocktailAbrufen(String id) {
+        LOG.warn("Fallback: Mocktail konnte nicht abgerufen werden: " + id);
+        ErrorMessage errorMessage = new ErrorMessage(999, "Mocktail derzeit nicht verfügbar", "Mocktail ID: " + id);
+        return Response.status(Status.SERVICE_UNAVAILABLE).entity(errorMessage).build();
+    }
+
     @POST
     @Operation(summary = "Nicht erlaubt",
             description = "POST-Anfragen auf diese Ressource sind nicht erlaubt.")
@@ -66,6 +80,11 @@ public class MocktailResource {
     }
 
     @DELETE
+    @CircuitBreaker(
+            requestVolumeThreshold = 4,
+            failureRatio = 0.5,
+            delay = 5000
+    )
     @Operation(summary = "Mocktail löschen",
             description = "Löscht den Mocktail mit der angegebenen ID.")
     @APIResponses(value = {
@@ -86,6 +105,11 @@ public class MocktailResource {
 
     @PATCH
     @Path("/zutaten")
+    @CircuitBreaker(
+            requestVolumeThreshold = 4,
+            failureRatio = 0.5,
+            delay = 5000
+    )
     @Operation(summary = "Zutaten eines Mocktails ändern",
             description = "Ändert die Zutatenliste eines Mocktails mit angegebener ID.")
     @APIResponses(value = {
@@ -114,6 +138,11 @@ public class MocktailResource {
 
     @PATCH
     @Path("/zubereitung")
+    @CircuitBreaker(
+            requestVolumeThreshold = 4,
+            failureRatio = 0.5,
+            delay = 5000
+    )
     @Operation(summary = "Zubereitung eines Mocktails ändern",
             description = "Ändert die Zubereitungsbeschreibung eines Mocktails mit angegebener ID.")
     @APIResponses(value = {
