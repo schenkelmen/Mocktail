@@ -20,7 +20,6 @@ import java.util.concurrent.ConcurrentMap;
 public class MocktailRepository implements MocktailVerwalter {
 
     private static final Logger LOG = Logger.getLogger(MocktailRepository.class);
-
     private ConcurrentMap<String, Mocktail> mocktails = new ConcurrentHashMap<>();
 
     @Override
@@ -38,10 +37,14 @@ public class MocktailRepository implements MocktailVerwalter {
 
     public String fallbackAnlegenNeuMocktail(String name, String zutaten, String zubereitung) {
         LOG.error("Fallback: Mocktail konnte nicht angelegt werden.");
-        return "fallback-id"; // Notlösung
+        return "error-fallback-mocktail";
     }
 
     @Override
+    @Retry(maxRetries = 3, delay = 200)
+    @Timeout(1500)
+    @CircuitBreaker(requestVolumeThreshold = 4, failureRatio = 0.5, delay = 5000)
+    @Fallback(fallbackMethod = "fallbackEntfernen")
     public boolean entfernen(String id) {
         try {
             Mocktail remove = this.mocktails.remove(id);
@@ -57,7 +60,16 @@ public class MocktailRepository implements MocktailVerwalter {
         }
     }
 
+    public boolean fallbackEntfernen(String id) {
+        LOG.error("Fallback: Entfernen fehlgeschlagen für Mocktail-ID: " + id);
+        return false;
+    }
+
     @Override
+    @Retry(maxRetries = 2, delay = 300)
+    @Timeout(1000)
+    @CircuitBreaker(requestVolumeThreshold = 3, failureRatio = 0.5, delay = 4000)
+    @Fallback(fallbackMethod = "fallbackAendereZutaten")
     public Optional<Mocktail> aendereZutaten(String id, String zutaten) {
         try {
             Optional<Mocktail> customerOptional = Optional.ofNullable(this.mocktails.get(id));
@@ -73,7 +85,16 @@ public class MocktailRepository implements MocktailVerwalter {
         }
     }
 
+    public Optional<Mocktail> fallbackAendereZutaten(String id, String zutaten) {
+        LOG.error("Fallback: Änderung der Zutaten fehlgeschlagen für Mocktail-ID: " + id);
+        return Optional.empty();
+    }
+
     @Override
+    @Retry(maxRetries = 2, delay = 300)
+    @Timeout(1000)
+    @CircuitBreaker(requestVolumeThreshold = 3, failureRatio = 0.5, delay = 4000)
+    @Fallback(fallbackMethod = "fallbackAendereZubereitung")
     public Optional<Mocktail> aendereZubereitung(String id, String zubereitung) {
         try {
             Optional<Mocktail> customerOptional = Optional.ofNullable(this.mocktails.get(id));
@@ -89,7 +110,17 @@ public class MocktailRepository implements MocktailVerwalter {
         }
     }
 
+    public Optional<Mocktail> fallbackAendereZubereitung(String id, String zubereitung) {
+        LOG.error("Fallback: Änderung der Zubereitung fehlgeschlagen für Mocktail-ID: " + id);
+        return Optional.empty();
+    }
+
     @Override
+
+    @Retry(maxRetries = 3, delay = 200)
+    @Timeout(2000)
+    @CircuitBreaker(requestVolumeThreshold = 5, failureRatio = 0.5, delay = 4000)
+    @Fallback(fallbackMethod = "fallbackFindeMocktailMitId")
     public Optional<Mocktail> findeMocktailMitId(String id) {
         Mocktail customer = this.mocktails.get(id);
         if (customer == null) {
@@ -100,9 +131,24 @@ public class MocktailRepository implements MocktailVerwalter {
         return Optional.ofNullable(customer);
     }
 
+    public Optional<Mocktail> fallbackFindeMocktailMitId(String id) {
+        LOG.error("Fallback: Mocktail konnte nicht gefunden werden für ID: " + id);
+        return Optional.empty();
+    }
+
     @Override
+    @Retry(maxRetries = 3, delay = 200)
+    @Timeout(2000)
+    @CircuitBreaker(requestVolumeThreshold = 5, failureRatio = 0.5, delay = 4000)
+    @Fallback(fallbackMethod = "fallbackAlleMocktails")
     public Collection<Mocktail> alleMocktails() {
         LOG.info("Alle Mocktails werden abgefragt.");
         return Collections.unmodifiableCollection(this.mocktails.values());
     }
+
+    public Collection<Mocktail> fallbackAlleMocktails() {
+        LOG.error("Fallback: Fehler beim Abfragen aller Mocktails.");
+        return Collections.emptyList();
+    }
+
 }
