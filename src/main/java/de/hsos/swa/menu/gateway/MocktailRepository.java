@@ -3,6 +3,10 @@ package de.hsos.swa.menu.gateway;
 import de.hsos.swa.menu.entity.Mocktail;
 import de.hsos.swa.menu.entity.MocktailVerwalter;
 import jakarta.enterprise.context.ApplicationScoped;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Retry;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.jboss.logging.Logger;
 
 import java.util.Collection;
@@ -20,6 +24,10 @@ public class MocktailRepository implements MocktailVerwalter {
     private ConcurrentMap<String, Mocktail> mocktails = new ConcurrentHashMap<>();
 
     @Override
+    @Retry(maxRetries = 3, delay = 200)
+    @Timeout(2000)
+    @CircuitBreaker(requestVolumeThreshold = 4, failureRatio = 0.5, delay = 5000)
+    @Fallback(fallbackMethod = "fallbackAnlegenNeuMocktail")
     public String anlegenNeuMocktail(String name, String zutaten, String zubereitung) {
         String id = UUID.randomUUID().toString();
         Mocktail mocktail = new Mocktail(id, name, zutaten, zubereitung);
