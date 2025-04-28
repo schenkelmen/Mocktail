@@ -2,8 +2,17 @@ package de.hsos.swa.menu.boundary.util.dto;
 
 import de.hsos.swa.menu.entity.Mocktail;
 import jakarta.json.bind.annotation.JsonbCreator;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-public record MocktailDTO(String id, String name, String zutaten, String zubereitung) {
+public record MocktailDTO(
+        @Schema(description = "Eindeutige ID des Mocktails")
+        String id,
+        @Schema(description = "Name des Mocktails")
+        String name,
+        @Schema(description = "Zutaten des Mocktails")
+        String zutaten,
+        @Schema(description = "Anleitung")
+        String zubereitung) {
         @JsonbCreator
         public MocktailDTO {
             if (id == null || id.isBlank()) {
