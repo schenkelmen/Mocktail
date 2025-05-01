@@ -124,4 +124,15 @@ public class MocktailsResource {
         LOG.warn("DELETE Anfrage auf /mocktails - Methode nicht erlaubt.");
         return Response.status(Status.METHOD_NOT_ALLOWED).build();
     }
+    public Collection<MocktailDTO> fallbackAbfragenAllerMocktails() {
+        return List.of(); // oder eine Default-Liste
+    }
+
+    public Response fallbackNeuMocktailAnlegen(NeuMocktailDTO dto) {
+        return Response.status(Status.SERVICE_UNAVAILABLE)
+                .entity("Mocktail konnte nicht angelegt werden. Bitte später versuchen.")
+                .build();
+    }
+
+
 }
